@@ -1,0 +1,19 @@
+[
+  {
+    "manifestVersion": 2,
+    "name": "Nyaa",
+    "id": "nyaa-tracker",
+    "version": "1.0.0",
+    "type": "torrent",
+    "accuracy": "high",
+    "ratio": 0,
+    "media": "sub",
+    "languages": [
+      "US"
+    ],
+    "icon": "https://nyaa.si/static/favicon.png",
+    "update": "https://raw.githubusercontent.com/Metley/hayase-extension/main/index.json",
+    "code": "https://raw.githubusercontent.com/Metley/hayase-extension/main/nyaa.js",
+    "url": "aHR0cHM6Ly9ueWFhLnNpLw=="
+  }
+]
