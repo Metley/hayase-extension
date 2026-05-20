@@ -21,7 +21,8 @@ export default new class {
     } else ep = `${episodes.map(epstring).join("|")}`;
     
     // c=1_2 is for "Anime - English-translated"
-    let entries = parseRSSItems(await getRSSContent(`${this.url}?page=rss&c=1_2&s=seeders&o=desc&q=(${titles})${ep}${exclusions.length ? `-"${exclusions.join('"|"')}"` : ""}`));
+    // f=2 is for "Trusted only"
+    let entries = parseRSSItems(await getRSSContent(`${this.url}?page=rss&c=1_2&f=2&s=seeders&o=desc&q=(${titles})${ep}${exclusions.length ? `-"${exclusions.join('"|"')}"` : ""}`));
     
     const checkSequelDate = "FINISHED" === media.status && ("FINISHED" === sequel?.status || "RELEASING" === sequel?.status) && sequel.startDate, sequelStartDate = checkSequelDate && new Date(Object.values(checkSequelDate).join(" ")), checkPrequelDate = ("FINISHED" === media.status || "RELEASING" === media.status) && "FINISHED" === prequel?.status && prequel?.endDate, prequelEndDate = checkPrequelDate && new Date(Object.values(checkPrequelDate).join(" "));
     return prequelEndDate && (entries = entries.filter(entry => entry.date > new Date(+prequelEndDate + 10699393840))), 
