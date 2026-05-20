@@ -7,7 +7,7 @@ const sizeMap = {
 
 export default new class {
   url=atob("aHR0cHM6Ly9ueWFhLnNpLw==");
-  async single({media: media, episode: episode, exclusions: exclusions, episodeCount: episodeCount, absoluteEpisodeNumber: absoluteEpisodeNumber}, _, isBatch = !1) {
+  async single({media: media, episode: episode, resolution: resolution, exclusions: exclusions, episodeCount: episodeCount, absoluteEpisodeNumber: absoluteEpisodeNumber}, _, isBatch = !1) {
     if (!navigator.onLine) return [];
     
     if (media.isAdult) return [];
@@ -22,7 +22,7 @@ export default new class {
     
     // c=1_2 is for "Anime - English-translated"
     // f=2 is for "Trusted only"
-    let entries = parseRSSItems(await getRSSContent(`${this.url}?page=rss&c=1_2&f=2&s=seeders&o=desc&q=(${titles})${ep}${exclusions.length ? `-"${exclusions.join('"|"')}"` : ""}`));
+    let entries = parseRSSItems(await getRSSContent(`${this.url}?page=rss&c=1_2&f=2&s=seeders&o=desc&q=(${titles})${ep}${resolution.length ? `"${resolution}"` : ""}${exclusions.length ? `-"${exclusions.join('"|"')}"` : ""}`));
     
     const checkSequelDate = "FINISHED" === media.status && ("FINISHED" === sequel?.status || "RELEASING" === sequel?.status) && sequel.startDate, sequelStartDate = checkSequelDate && new Date(Object.values(checkSequelDate).join(" ")), checkPrequelDate = ("FINISHED" === media.status || "RELEASING" === media.status) && "FINISHED" === prequel?.status && prequel?.endDate, prequelEndDate = checkPrequelDate && new Date(Object.values(checkPrequelDate).join(" "));
     return prequelEndDate && (entries = entries.filter(entry => entry.date > new Date(+prequelEndDate + 10699393840))), 
@@ -78,7 +78,7 @@ function parseRSSItems(xml) {
       downloads: downloads,
       size: sizeInBytes,
       hash: hash,
-      accuracy: "low",
+      accuracy: "high",
       date: new Date(pubDate)
     });
   }
